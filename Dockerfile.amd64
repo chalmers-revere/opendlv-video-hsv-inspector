@@ -16,8 +16,8 @@
 FROM chrberger/cluon-amd64:latest as builder
 MAINTAINER Christian Berger "christian.berger@gu.se"
 
-RUN echo http://dl-4.alpinelinux.org/alpine/edge/main > /etc/apk/repositories && \
-    echo http://dl-4.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+RUN echo http://dl-4.alpinelinux.org/alpine/v3.8/main > /etc/apk/repositories && \
+    echo http://dl-4.alpinelinux.org/alpine/v3.8/community >> /etc/apk/repositories && \
     echo http://dl-4.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
     apk update && \
     apk --no-cache add \
@@ -33,19 +33,5 @@ RUN mkdir build && \
     cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr .. && \
     make && make install
 
-
-#FROM chrberger/cluon-amd64:latest
-#MAINTAINER Christian Berger "christian.berger@gu.se"
-
-#RUN echo http://dl-4.alpinelinux.org/alpine/edge/main > /etc/apk/repositories && \
-#    echo http://dl-4.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
-#    echo http://dl-4.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
-#    apk update && \
-#    apk --no-cache add \
-#        opencv-libs \
-#        libcanberra-gtk3
-
-#WORKDIR /usr/bin
-#COPY --from=builder /tmp/bin/opendlv-video-hsv-inspector .
 ENTRYPOINT ["/usr/bin/opendlv-video-hsv-inspector"]
 
