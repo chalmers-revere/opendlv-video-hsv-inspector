@@ -25,7 +25,10 @@ RUN echo http://dl-4.alpinelinux.org/alpine/v3.8/main > /etc/apk/repositories &&
         g++ \
         opencv \
         opencv-dev \
-        make
+        make \
+        fontconfig \
+        ttf-ubuntu-font-family && \
+    fc-cache -f
 ADD . /opt/sources
 WORKDIR /opt/sources
 RUN mkdir build && \
