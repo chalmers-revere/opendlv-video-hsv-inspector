@@ -13,22 +13,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM chrberger/cluon-amd64:latest as builder
+FROM ubuntu:18.04 as builder
 MAINTAINER Christian Berger "christian.berger@gu.se"
 
-RUN echo http://dl-4.alpinelinux.org/alpine/v3.8/main > /etc/apk/repositories && \
-    echo http://dl-4.alpinelinux.org/alpine/v3.8/community >> /etc/apk/repositories && \
-    echo http://dl-4.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
-    apk update && \
-    apk --no-cache add \
+# Set the env variable DEBIAN_FRONTEND to noninteractive
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get dist-upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
         cmake \
-        g++ \
-        opencv \
-        opencv-dev \
-        make \
-        fontconfig \
-        ttf-ubuntu-font-family && \
-    fc-cache -f
+        build-essential \
+        libopencv-dev
+
 ADD . /opt/sources
 WORKDIR /opt/sources
 RUN mkdir build && \
