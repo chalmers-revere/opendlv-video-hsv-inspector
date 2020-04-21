@@ -79,11 +79,11 @@ int32_t main(int32_t argc, char **argv) {
             cvCreateTrackbar("Val (max)", "Inspector", &maxV, 255);
 
             // Endless loop; end the program by pressing Ctrl-C.
-            while (cv::waitKey(1)) {
+            while (cv::waitKey(10)) {
                 cv::Mat img;
 
-                // Wait for a notification of a new frame.
-                sharedMemory->wait();
+                // Don't wait for a notification of a new frame so that the sender can pause while we are still inspection
+                //sharedMemory->wait();
 
                 // Lock the shared memory.
                 sharedMemory->lock();
